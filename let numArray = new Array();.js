@@ -1,24 +1,36 @@
-function findTriplets(arr, n) {
-    arr.sort();
-    var l = arr.length;
-    for (var i = 0; i < l; i++) {
-        var j = i + 1,
-            k = l - 1;
-        while (j < k) {
-            if (arr[i] + arr[j] + arr[k] < n) {
-                j++;
-            } else if (arr[i] + arr[j] + arr[k] > n) {
-                k--;
-            } else {
-                console.log(arr[i] + "," + arr[j] + "," + arr[k]);
-                j++;
-                k--;
-            }
-        }
+function Result() {
+    return Math.floor(Math.random() * 100) % 6 + 1; 
+}
+let count = new Map();
+let min_Key;
+let max_Key;
+let max_Value = -1;
+let min_Value = 11;
+
+while(true) {
+    var number = Result(); 
+    if(!count.has(number))
+        count.set(number, 1);
+    else {
+        let count = count.get(number);
+        count.set(number, ++count);
     }
-    return true;
+    if(count.get(number) == 10) 
+        break;
 }
 
-var arr = [-1, -4, -9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-findTriplets(arr, 0);
+console.log(count);
 
+for( let [key, value] of count) {
+    if(value < min_Value) {
+        min_Key = key;
+        min_Value = value;
+    }
+    if(value > max_Value) {
+        max_Key = key;
+        max_Value = value;
+    }
+}
+
+console.log("Minimum key count: " + min_Key + ", count: " + min_Value);
+console.log("Maximum key count: " + max_Key + ", count: " + max_Value);
